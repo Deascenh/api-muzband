@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -36,6 +36,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Music
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -57,24 +59,6 @@ class Music
      * @Groups({ "music_get_all", "music_get" })
      */
     private $title;
-
-    /**
-     * @var \DateTime $createdAt Creation date and time
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     * @Groups({ "music_get_all", "music_get" })
-     */
-    private $createdAt;
-
-    /**
-     * @var \DateTime $updatedAt Last modification date and time
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     * @Groups({ "music_get_all", "music_get" })
-     */
-    private $updatedAt;
 
     /**
      * @var User The user who declared this music
@@ -108,30 +92,6 @@ class Music
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTime $updatedAt
-     */
-    public function setUpdatedAt(\DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     /**
