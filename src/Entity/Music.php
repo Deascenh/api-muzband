@@ -42,6 +42,7 @@ class Music
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({ "music_get_all", "music_get" })
      */
     private $id;
 
