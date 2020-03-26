@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -46,11 +49,6 @@ class Music
      */
     private $id;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     /**
      * @var string Title of the music also used as resource slug
      *
@@ -72,6 +70,24 @@ class Music
     public $creator;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ApiSubresource()
+     * @OneToMany(targetEntity="Musician", mappedBy="music")
+     */
+    private $musicians;
+
+    public function __construct()
+    {
+        $this->musicians = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getTitle(): string
@@ -88,14 +104,6 @@ class Music
     }
 
     /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * @return User
      */
     public function getCreator(): User
@@ -109,5 +117,37 @@ class Music
     public function setCreator(User $creator): void
     {
         $this->creator = $creator;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMusicians(): ArrayCollection
+    {
+        return $this->musicians;
+    }
+
+    /**
+     * @param ArrayCollection $musicians
+     */
+    public function setMusicians(ArrayCollection $musicians): void
+    {
+        $this->musicians = $musicians;
+    }
+
+    public function addMusician(Instrument $musician): Music
+    {
+        if (!$this->musicians->contains($musician)) {
+            $this->musicians->add($musician);
+        }
+
+        return $this;
+    }
+
+    public function removeMusician(Instrument $musician): Music
+    {
+        $this->musicians->removeElement($musician);
+
+        return $this;
     }
 }
