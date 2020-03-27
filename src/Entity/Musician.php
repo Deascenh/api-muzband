@@ -87,7 +87,7 @@ class Musician
     /**
      * @return ArrayCollection
      */
-    public function getInstruments(): ArrayCollection
+    public function getInstruments()
     {
         return $this->instruments;
     }

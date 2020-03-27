@@ -122,7 +122,7 @@ class Music
     /**
      * @return ArrayCollection
      */
-    public function getMusicians(): ArrayCollection
+    public function getMusicians()
     {
         return $this->musicians;
     }
