@@ -67,7 +67,7 @@ class Musician
     /**
      * @var ArrayCollection Instruments the musician play
      *
-     * @ORM\ManyToMany(targetEntity="Instrument", mappedBy="musicians")
+     * @ORM\ManyToMany(targetEntity="Instrument", inversedBy="musicians")
      * @JoinTable(name="musicians_instruments")
      * @Groups({ "musician_get_all", "musician_get" })
      * @MaxDepth(1)
