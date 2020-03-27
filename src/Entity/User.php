@@ -38,13 +38,19 @@ class User implements UserInterface
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      *
-     * @Groups({"user_get", "user_get_all"})
+     * @Groups({
+     *     "user_get", "user_get_all",
+     *     "musician_get", "musician_get_all"
+     * })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user_get", "user_get_all"})
+     * @Groups({
+     *     "user_get", "user_get_all",
+     *     "musician_get", "musician_get_all"
+     * })
      */
     private $email;
 

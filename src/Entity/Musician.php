@@ -30,6 +30,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *              "denormalization_context"={"groups"={"musician_get"}}
  *          },
  *     },
+ *     subresourceOperations={
+ *     "api_musics_musicians_get_subresource"={
+ *         "normalization_context"={"groups"={"musician_get_all"}}
+ *     }
+ * }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MusicianRepository")
  */
