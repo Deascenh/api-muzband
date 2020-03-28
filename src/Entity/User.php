@@ -24,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "normalization_context"={"groups"={"user_get"}},
  *          },
  *         "put"={"security"="is_granted('ROLE_ADMIN') or object.owner == user"},
- *     }
+ *     },
+ *     attributes={"order"={"email": "ASC"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */

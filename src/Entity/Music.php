@@ -33,6 +33,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *              "denormalization_context"={"groups"={"music_get"}}
  *          },
  *     },
+ *     attributes={"order"={"title": "ASC"}}
  * )
  * @UniqueEntity("title")
  * @ORM\Entity(repositoryClass="App\Repository\MusicRepository")

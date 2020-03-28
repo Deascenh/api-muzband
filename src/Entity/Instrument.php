@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "denormalization_context"={"groups"={"instrument_get"}}
  *          },
  *     },
+ *     attributes={"order"={"name": "ASC"}}
  *
  * )
  * @ORM\Entity(repositoryClass="App\Repository\InstrumentRepository")

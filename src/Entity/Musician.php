@@ -31,10 +31,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *          },
  *     },
  *     subresourceOperations={
- *     "api_musics_musicians_get_subresource"={
- *         "normalization_context"={"groups"={"musician_get_all"}}
- *     }
- * }
+     *     "api_musics_musicians_get_subresource"={
+     *         "normalization_context"={"groups"={"musician_get_all"}}
+ *          }
+ *     },
+ *     attributes={"order"={"createdAt": "ASC"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MusicianRepository")
  */
