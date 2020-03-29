@@ -68,7 +68,7 @@ class Musician
      * @Groups({ "musician_get_all", "musician_get" })
      * @MaxDepth(1)
      */
-    public $user;
+    public $user = null;
 
     /**
      * @var ArrayCollection Instruments the musician play

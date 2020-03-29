@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  ** Secured resource.
@@ -48,12 +49,24 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(max = 180)
      * @Groups({
      *     "user_get", "user_get_all",
      *     "musician_get", "musician_get_all"
      * })
      */
     private $email;
+
+    /**
+     * @var string User name displayed everywhere in the
+     * application and seen by all other users. If null,
+     * the application uses email instead.
+     *
+     * @ORM\Column(type="string", length=225, unique=true, nullable=true)
+     * @Assert\Length(max = 225)
+     * @Groups({ "user_get_all", "user_get" })
+     */
+    private $name = true;
 
     /**
      * @ORM\Column(type="json")
@@ -143,5 +156,21 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }

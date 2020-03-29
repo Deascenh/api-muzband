@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -47,7 +48,9 @@ class Instrument
     /**
      * @var string Name of this instrument
      *
-     * @ORM\Column(type="string", unique=true, length=255)
+     * @ORM\Column(type="string", unique=true, length=255, nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 225)
      * @Groups({ "instrument_get_all", "instrument_get" })
      */
     private $name;

@@ -51,7 +51,7 @@ class Music
     private $id;
 
     /**
-     * @var string Title of the music also used as resource slug
+     * @var string Title of the music
      *
      * @ORM\Column(type="string", length=225, unique=true, nullable=false)
      * @Assert\NotBlank()
@@ -59,6 +59,16 @@ class Music
      * @Groups({ "music_get_all", "music_get" })
      */
     private $title;
+
+    /**
+     * @var string Creator and owner of music rights
+     * May be the name of a band or a music performer.
+     *
+     * @ORM\Column(type="string", length=225, nullable=true)
+     * @Assert\Length(max = 225)
+     * @Groups({ "music_get_all", "music_get" })
+     */
+    private $artist = null;
 
     /**
      * @var User The user who declared this music
@@ -150,5 +160,21 @@ class Music
         $this->musicians->removeElement($musician);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * @param string $artist
+     */
+    public function setArtist(string $artist): void
+    {
+        $this->artist = $artist;
     }
 }
