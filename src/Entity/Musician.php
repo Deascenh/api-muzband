@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *              "normalization_context"={"groups"={"musician_get"}, "enable_max_depth"=true},
  *              "denormalization_context"={"groups"={"musician_get"}}
  *          },
+ *          "delete"={"method"="DELETE"},
  *     },
  *     subresourceOperations={
      *     "api_musics_musicians_get_subresource"={

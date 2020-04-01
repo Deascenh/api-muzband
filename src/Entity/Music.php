@@ -32,6 +32,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *              "normalization_context"={"groups"={"music_get"}, "enable_max_depth"=true},
  *              "denormalization_context"={"groups"={"music_get"}}
  *          },
+ *          "delete"={"method"="DELETE"},
  *     },
  *     attributes={"order"={"title": "ASC"}}
  * )

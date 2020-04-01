@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "normalization_context"={"groups"={"instrument_get"}},
  *              "denormalization_context"={"groups"={"instrument_get"}}
  *          },
+ *          "delete"={"method"="DELETE"}
  *     },
  *     attributes={"order"={"name": "ASC"}}
  *
