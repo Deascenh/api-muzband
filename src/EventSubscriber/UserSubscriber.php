@@ -34,6 +34,7 @@ class UserSubscriber implements EventSubscriberInterface {
 
         if ($user instanceof User && $user->getPlainPassword()) {
             $password = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setRoles(['ROLE_USER']);
             $user->setPassword($password);
         }
     }
