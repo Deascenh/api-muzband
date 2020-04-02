@@ -18,13 +18,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get"={
  *              "normalization_context"={"groups"={"user_get_all"}},
  *          },
- *         "post"={"security"="is_granted('ROLE_ADMIN')"},
+ *          "post"={
+ *              "normalization_context"={"groups"={"user_post"}},
+ *              "denormalization_context"={"groups"={"user_post"}}
+ *          }
  *     },
  *     itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"user_get"}},
  *          },
- *         "put"={"security"="is_granted('ROLE_ADMIN') or object.owner == user"},
+ *         "put"={
+ *              "security"="object == user",
+ *              "normalization_context"={"groups"={"user_put"}},
+ *              "denormalization_context"={"groups"={"user_get"}}
+ *          }
  *     },
  *     attributes={"order"={"email": "ASC"}}
  * )
@@ -41,7 +48,7 @@ class User implements UserInterface
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      *
      * @Groups({
-     *     "user_get", "user_get_all",
+     *     "user_get", "user_get_all", "user_post",
      *     "musician_get", "musician_get_all"
      * })
      */
@@ -51,7 +58,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Length(max = 180)
      * @Groups({
-     *     "user_get", "user_get_all",
+     *     "user_get", "user_get_all", "user_post", "user_put",
      *     "musician_get", "musician_get_all"
      * })
      */
@@ -64,13 +71,16 @@ class User implements UserInterface
      *
      * @ORM\Column(type="string", length=225, unique=true, nullable=true)
      * @Assert\Length(max = 225)
-     * @Groups({ "user_get_all", "user_get" })
+     * @Groups({
+     *     "user_get_all", "user_get", "user_post", "user_put",
+     *     "musician_get", "musician_get_all"
+     * })
      */
     private $name = true;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user_get"})
+     * @Groups({"user_get", "user_post"})
      */
     private $roles = [];
 
@@ -79,6 +89,14 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @var string The raw password
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     * @Groups({"user_post"})
+     */
+    private $plainPassword;
 
     public function getId(): ?UuidInterface
     {
@@ -137,6 +155,18 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password): self
+    {
+        $this->plainPassword = $password;
 
         return $this;
     }
