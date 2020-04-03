@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "normalization_context"={"groups"={"user_get_all"}},
  *          },
  *          "post"={
- *              "normalization_context"={"groups"={"user_post"}},
+ *              "normalization_context"={"groups"={"user_get"}},
  *              "denormalization_context"={"groups"={"user_post"}}
  *          }
  *     },
@@ -29,8 +29,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *         "put"={
  *              "security"="object == user",
- *              "normalization_context"={"groups"={"user_put"}},
- *              "denormalization_context"={"groups"={"user_get"}}
+ *              "normalization_context"={"groups"={"user_get"}},
+ *              "denormalization_context"={"groups"={"user_put"}}
  *          }
  *     },
  *     attributes={"order"={"email": "ASC"}}
@@ -48,7 +48,7 @@ class User implements UserInterface
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      *
      * @Groups({
-     *     "user_get", "user_get_all", "user_post",
+     *     "user_get", "user_get_all",
      *     "musician_get", "musician_get_all"
      * })
      */
@@ -66,7 +66,7 @@ class User implements UserInterface
 
     /**
      * @var string User name displayed everywhere in the
-     * application and seen by all other users. If null,
+     * application and seen by all other users. If null or empty,
      * the application uses email instead.
      *
      * @ORM\Column(type="string", length=225, unique=true, nullable=true)
@@ -92,7 +92,6 @@ class User implements UserInterface
 
     /**
      * @var string The raw password
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      * @Groups({"user_post"})
      */
