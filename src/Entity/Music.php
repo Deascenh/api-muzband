@@ -6,7 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping\OneToMany;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -38,12 +40,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  * @UniqueEntity("title")
  * @ORM\Entity(repositoryClass="App\Repository\MusicRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Music
 {
+    use SoftDeleteableEntity;
     use TimestampableEntity;
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -63,7 +69,7 @@ class Music
 
     /**
      * @var string Creator and owner of music rights
-     * May be the name of a band or a music performer.
+     *  May be the name of a band or a music performer.
      *
      * @ORM\Column(type="string", length=225, nullable=true)
      * @Assert\Length(max = 225)
@@ -132,9 +138,9 @@ class Music
     }
 
     /**
-     * @return ArrayCollection
+     * @return ArrayCollection|null
      */
-    public function getMusicians()
+    public function getMusicians(): ?ArrayCollection
     {
         return $this->musicians;
     }
