@@ -5,7 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping\JoinTable;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -39,9 +41,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     attributes={"order"={"createdAt": "ASC"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MusicianRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Musician
 {
+    use SoftDeleteableEntity;
     use TimestampableEntity;
 
     /**
