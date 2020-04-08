@@ -30,10 +30,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "get"={
  *              "normalization_context"={"groups"={"user_get"}},
  *          },
- *         "put"={
+ *          "put"={
  *              "security"="object == user",
  *              "normalization_context"={"groups"={"user_get"}},
  *              "denormalization_context"={"groups"={"user_put"}}
+ *          },
+ *          "delete"={
+ *              "security"="object == user",
+ *              "method"="DELETE"
  *          }
  *     },
  *     attributes={"order"={"email": "ASC"}}
