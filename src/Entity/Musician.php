@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping\JoinTable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
@@ -35,7 +34,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     },
  *     subresourceOperations={
      *     "api_musics_musicians_get_subresource"={
-     *         "normalization_context"={"groups"={"musician_get_all"}}
+     *         "normalization_context"={"groups"={"musician_get"}}
  *          }
  *     },
  *     attributes={"order"={"createdAt": "ASC"}}
@@ -46,12 +45,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class Musician
 {
     use SoftDeleteableEntity;
-    use TimestampableEntity;
 
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({ "musician_get_all", "musician_get" })
      */
     private $id;
 
@@ -84,6 +83,24 @@ class Musician
      * @MaxDepth(1)
      */
     public $instruments;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     * @Groups({ "musician_get" })
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     * @Groups({ "musician_get" })
+     */
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -157,5 +174,51 @@ class Musician
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * Sets createdAt.
+     *
+     * @param  \DateTime $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Returns createdAt.
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Sets updatedAt.
+     *
+     * @param  \DateTime $updatedAt
+     * @return $this
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Returns updatedAt.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
     }
 }
